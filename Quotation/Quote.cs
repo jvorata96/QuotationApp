@@ -35,6 +35,11 @@ namespace Quotation
             return material;
         }
 
+        public void ModifyMaterial(string name, Material material)
+        {
+            _materialList[_materialList.FindIndex(x => string.Equals(x.Name, name))] = material;
+        }
+
         public List<Material> GetMaterials()
         {
             return _materialList;
@@ -59,11 +64,10 @@ namespace Quotation
 
         public void setTotal()
         {
-            //Total = Qty * ((1 + Markup) * (Material_Cost + (Setup_Hr * Setup_Cost / Qty) +(Operation_Hr * Operation_Cost)));
             float tempTotal = 0;
             foreach (var mat in _materialList)
             {
-                tempTotal += mat.Qty * ((1 + mat.Markup) * (mat.Material_Cost + (mat.Setup_Hr * mat.Setup_Cost / mat.Qty) + (mat.Operation_Hr * mat.Operation_Cost)));
+                tempTotal += mat.SubTotal;
             }
 
             Total = tempTotal;
