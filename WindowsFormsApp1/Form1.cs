@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Collections.ObjectModel;
 
 using Quotation;
 
@@ -366,6 +368,12 @@ namespace WindowsFormsApp1
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'joelEngineeringDBDataSet2.JoelProducts' table. You can move, or remove it, as needed.
+            this.joelProductsTableAdapter.Fill(this.joelEngineeringDBDataSet2.JoelProducts);
+            // TODO: This line of code loads data into the 'joelEngineeringDBDataSet1.JoelProducts' table. You can move, or remove it, as needed.
+            //this.joelProductsTableAdapter1.Fill(this.joelEngineeringDBDataSet1.JoelProducts);
+            // TODO: This line of code loads data into the 'joelEngineeringDBDataSet.JoelProducts' table. You can move, or remove it, as needed.
+            //this.joelProductsTableAdapter.Fill(this.joelEngineeringDBDataSet.JoelProducts);
 
         }
 
@@ -555,11 +563,170 @@ namespace WindowsFormsApp1
                 cylinderList.RemoveAt(1);
                 comboBox1.DataSource = cylinderList;
                 textBox1.Text = cylinderList.Count.ToString();
+
+               
+                //ObservableCollection<Cylinder> 
             }
             catch(Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message + ": " + ex.Source);
             }
+        }
+
+        public SQLQuery sQLQuery;
+        List<Material> materialsx;
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //SQLQuery sQLQuery = new SQLQuery();
+            sQLQuery = new SQLQuery();
+            sQLQuery.Connect();
+
+
+            //List<Material> materials = new List<Material>(sQLQuery.Products);
+            materialsx = new List<Material>(sQLQuery.Products);
+            DataGridProducts.DataSource = materialsx;
+
+            DataGridProducts.AutoResizeColumns();
+
+            DataGridProducts.Columns["SubTotal"].DefaultCellStyle.Format = "C2";
+            DataGridProducts.Columns["Price_Per_Piece"].DefaultCellStyle.Format = "C2";
+            DataGridProducts.Columns["Subtotal"].HeaderText = "Sub Total";
+            DataGridProducts.Columns["Price_Per_Piece"].HeaderText = "Price per Piece";
+
+
+            DataGridProducts.Columns["Material_Cost"].Visible = false;
+            DataGridProducts.Columns["Setup_Hr"].Visible = false;
+            DataGridProducts.Columns["Setup_Cost"].Visible = false;
+            DataGridProducts.Columns["Operation_Cost"].Visible = false;
+            DataGridProducts.Columns["Operation_Hr"].Visible = false;
+            DataGridProducts.Columns["Markup"].Visible = false;
+
+            DataGridProducts.ClearSelection();
+
+            ComboBoxProducts.DisplayMember = "Name";
+            ComboBoxProducts.ValueMember = null;
+            ComboBoxProducts.DataSource = materialsx;
+
+
+            //try
+            //{
+            //    SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
+            //    {
+            //        DataSource = "joelengineering.database.windows.net",
+            //        UserID = "tony",
+            //        Password = "Jadenonoy_12",
+            //        InitialCatalog = "JoelEngineeringDB"
+            //    };
+
+            //    using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            //    {
+            //        Console.WriteLine("\nQuery data example:");
+            //        //Console.WriteLine("=========================================\n");
+
+            //        connection.Open();
+            //        StringBuilder sb = new StringBuilder();
+            //        sb.Append("SELECT * FROM JoelProducts");
+            //        //sb.Append("INSERT INTO JoelProducts VALUES ('trylang227', 223, 1, 50, 3, 75, 0.5);");
+
+            //        String sql = sb.ToString();
+
+            //        SqlCommand command = new SqlCommand(sql, connection);
+            //        command.ExecuteNonQuery();
+
+            //        textBox2.Text = "yoyoyo";
+
+
+            //        ComboProducts.DataSource = null;
+            //        ComboProducts.DisplayMember = "PRODUCT NAME/WORKS";
+            //        ComboProducts.DataSource = joelProductsBindingSource;
+
+
+            //        Console.WriteLine("hello");
+
+
+            //        ComboProducts.Refresh();
+            //        //ComboProducts.Update();
+            //        //using (SqlCommand command = new SqlCommand(sql, connection))
+            //        //{
+            //        //    using (SqlDataReader reader = command.ExecuteReader())
+            //        //    {
+            //        //        while (reader.Read())
+            //        //        {
+            //        //            //Console.WriteLine("{0} {1}", reader.GetString(0), reader.GetString(1));
+            //        //            textBox2.Text = reader.GetInt32(0).ToString() + reader.GetString(1).ToString();
+            //        //            break;
+            //        //        }
+            //        //    }
+            //        //}
+            //    }
+            //}
+            //catch (SqlException ex)
+            //{
+            //    MessageBox.Show(ex.Message + ex.Source);
+            //}
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ComboProducts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void ComboProducts_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DisplayProducts()
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Material material = new Material
+            {
+                Name = "sample",
+                Material_Cost = 2,
+                Setup_Hr = 3,
+                Setup_Cost = 4,
+                Operation_Hr = 5,
+                Operation_Cost = 6,
+                Markup = 7,
+                Qty = 1
+            };
+
+            sQLQuery.AddProduct(material);
+
+            materialsx = new List<Material>(sQLQuery.Products);
+            DataGridProducts.DataSource = materialsx;
+
+            DataGridProducts.AutoResizeColumns();
+
+            DataGridProducts.Columns["SubTotal"].DefaultCellStyle.Format = "C2";
+            DataGridProducts.Columns["Price_Per_Piece"].DefaultCellStyle.Format = "C2";
+            DataGridProducts.Columns["Subtotal"].HeaderText = "Sub Total";
+            DataGridProducts.Columns["Price_Per_Piece"].HeaderText = "Price per Piece";
+
+
+            DataGridProducts.Columns["Material_Cost"].Visible = false;
+            DataGridProducts.Columns["Setup_Hr"].Visible = false;
+            DataGridProducts.Columns["Setup_Cost"].Visible = false;
+            DataGridProducts.Columns["Operation_Cost"].Visible = false;
+            DataGridProducts.Columns["Operation_Hr"].Visible = false;
+            DataGridProducts.Columns["Markup"].Visible = false;
+
+            DataGridProducts.ClearSelection();
+
+            ComboBoxProducts.DisplayMember = "Name";
+            ComboBoxProducts.ValueMember = null;
+            ComboBoxProducts.DataSource = materialsx;
         }
     }
 }

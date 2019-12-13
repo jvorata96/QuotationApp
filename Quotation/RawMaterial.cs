@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
+
 namespace Quotation
 {
     public abstract class RawMaterial
@@ -14,6 +15,8 @@ namespace Quotation
         public double Total { get; set; }
         public abstract void ComputePricePerPiece();
         public abstract void ComputeTotalPrice();
+
+        
 
     }
 }
