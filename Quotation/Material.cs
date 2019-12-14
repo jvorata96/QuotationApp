@@ -14,7 +14,8 @@ namespace Quotation
         public UInt32 Operation_Cost { get; set; }
         public float Operation_Hr { get; set; }
         public float Markup { get; set; }
-        
+        public float Id { get; set; }
+        public float Grp_Id { get; set; }
 
         public float Price_Per_Piece { get; set; }
 

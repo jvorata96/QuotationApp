@@ -71,19 +71,23 @@
             this.LblName = new System.Windows.Forms.Label();
             this.BtnSave = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.ComboProducts = new System.Windows.Forms.ComboBox();
             this.joelProductsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.joelEngineeringDBDataSet2 = new WindowsFormsApp1.JoelEngineeringDBDataSet2();
             this.joelProductsTableAdapter = new WindowsFormsApp1.JoelEngineeringDBDataSet2TableAdapters.JoelProductsTableAdapter();
-            this.DataGridProducts = new System.Windows.Forms.DataGridView();
+            this.DataGridMaterials = new System.Windows.Forms.DataGridView();
             this.ComboBoxProducts = new System.Windows.Forms.ComboBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.BtnAddProduct = new System.Windows.Forms.Button();
+            this.BtnDeleteProduct = new System.Windows.Forms.Button();
+            this.BtnAddNewMaterial = new System.Windows.Forms.Button();
+            this.BtnDeleteMaterial = new System.Windows.Forms.Button();
+            this.TxtProductName = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.joelProductsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.joelEngineeringDBDataSet2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DataGridProducts)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DataGridMaterials)).BeginInit();
             this.SuspendLayout();
             // 
             // TxtName
@@ -471,16 +475,6 @@
             this.textBox1.Size = new System.Drawing.Size(96, 20);
             this.textBox1.TabIndex = 50;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(548, 395);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(153, 25);
-            this.button1.TabIndex = 51;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(497, 536);
@@ -495,7 +489,7 @@
             this.ComboProducts.DataSource = this.joelProductsBindingSource;
             this.ComboProducts.DisplayMember = "PRODUCT NAME/WORKS";
             this.ComboProducts.FormattingEnabled = true;
-            this.ComboProducts.Location = new System.Drawing.Point(530, 462);
+            this.ComboProducts.Location = new System.Drawing.Point(492, 503);
             this.ComboProducts.Name = "ComboProducts";
             this.ComboProducts.Size = new System.Drawing.Size(198, 21);
             this.ComboProducts.TabIndex = 53;
@@ -515,52 +509,104 @@
             // 
             this.joelProductsTableAdapter.ClearBeforeFill = true;
             // 
-            // DataGridProducts
+            // DataGridMaterials
             // 
-            this.DataGridProducts.AllowUserToAddRows = false;
-            this.DataGridProducts.AllowUserToDeleteRows = false;
-            this.DataGridProducts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.DataGridProducts.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
-            this.DataGridProducts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DataGridProducts.Location = new System.Drawing.Point(745, 123);
-            this.DataGridProducts.Name = "DataGridProducts";
-            this.DataGridProducts.ReadOnly = true;
-            this.DataGridProducts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DataGridProducts.Size = new System.Drawing.Size(436, 347);
-            this.DataGridProducts.TabIndex = 54;
+            this.DataGridMaterials.AllowUserToAddRows = false;
+            this.DataGridMaterials.AllowUserToDeleteRows = false;
+            this.DataGridMaterials.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.DataGridMaterials.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
+            this.DataGridMaterials.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DataGridMaterials.Location = new System.Drawing.Point(745, 97);
+            this.DataGridMaterials.Name = "DataGridMaterials";
+            this.DataGridMaterials.ReadOnly = true;
+            this.DataGridMaterials.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DataGridMaterials.Size = new System.Drawing.Size(587, 347);
+            this.DataGridMaterials.TabIndex = 54;
             // 
             // ComboBoxProducts
             // 
             this.ComboBoxProducts.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.ComboBoxProducts.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.ComboBoxProducts.FormattingEnabled = true;
-            this.ComboBoxProducts.Location = new System.Drawing.Point(827, 63);
+            this.ComboBoxProducts.Location = new System.Drawing.Point(745, 12);
             this.ComboBoxProducts.Name = "ComboBoxProducts";
             this.ComboBoxProducts.Size = new System.Drawing.Size(198, 21);
             this.ComboBoxProducts.TabIndex = 55;
+            this.ComboBoxProducts.SelectedIndexChanged += new System.EventHandler(this.ComboBoxProducts_SelectedIndexChanged);
             // 
-            // button2
+            // BtnAddProduct
             // 
-            this.button2.Location = new System.Drawing.Point(548, 426);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(153, 25);
-            this.button2.TabIndex = 56;
-            this.button2.Text = "add";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.BtnAddProduct.Location = new System.Drawing.Point(949, 61);
+            this.BtnAddProduct.Name = "BtnAddProduct";
+            this.BtnAddProduct.Size = new System.Drawing.Size(153, 25);
+            this.BtnAddProduct.TabIndex = 56;
+            this.BtnAddProduct.Text = "Add New Product";
+            this.BtnAddProduct.UseVisualStyleBackColor = true;
+            this.BtnAddProduct.Click += new System.EventHandler(this.BtnAddProduct_Click);
+            // 
+            // BtnDeleteProduct
+            // 
+            this.BtnDeleteProduct.Location = new System.Drawing.Point(949, 9);
+            this.BtnDeleteProduct.Name = "BtnDeleteProduct";
+            this.BtnDeleteProduct.Size = new System.Drawing.Size(153, 25);
+            this.BtnDeleteProduct.TabIndex = 57;
+            this.BtnDeleteProduct.Text = "Delete Product";
+            this.BtnDeleteProduct.UseVisualStyleBackColor = true;
+            this.BtnDeleteProduct.Click += new System.EventHandler(this.BtnDeleteProduct_Click);
+            // 
+            // BtnAddNewMaterial
+            // 
+            this.BtnAddNewMaterial.Location = new System.Drawing.Point(904, 476);
+            this.BtnAddNewMaterial.Name = "BtnAddNewMaterial";
+            this.BtnAddNewMaterial.Size = new System.Drawing.Size(153, 25);
+            this.BtnAddNewMaterial.TabIndex = 58;
+            this.BtnAddNewMaterial.Text = "Add New Material";
+            this.BtnAddNewMaterial.UseVisualStyleBackColor = true;
+            this.BtnAddNewMaterial.Click += new System.EventHandler(this.BtnAddNewMaterial_Click);
+            // 
+            // BtnDeleteMaterial
+            // 
+            this.BtnDeleteMaterial.Location = new System.Drawing.Point(1063, 476);
+            this.BtnDeleteMaterial.Name = "BtnDeleteMaterial";
+            this.BtnDeleteMaterial.Size = new System.Drawing.Size(153, 25);
+            this.BtnDeleteMaterial.TabIndex = 59;
+            this.BtnDeleteMaterial.Text = "Delete Material";
+            this.BtnDeleteMaterial.UseVisualStyleBackColor = true;
+            this.BtnDeleteMaterial.Click += new System.EventHandler(this.BtnDeleteMaterial_Click);
+            // 
+            // TxtProductName
+            // 
+            this.TxtProductName.Location = new System.Drawing.Point(745, 64);
+            this.TxtProductName.Name = "TxtProductName";
+            this.TxtProductName.Size = new System.Drawing.Size(198, 20);
+            this.TxtProductName.TabIndex = 61;
+            this.TxtProductName.TextChanged += new System.EventHandler(this.TxtProductName_TextChanged);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(805, 45);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(75, 13);
+            this.label18.TabIndex = 62;
+            this.label18.Text = "Product Name";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1193, 603);
-            this.Controls.Add(this.button2);
+            this.ClientSize = new System.Drawing.Size(1500, 576);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.TxtProductName);
+            this.Controls.Add(this.BtnDeleteMaterial);
+            this.Controls.Add(this.BtnAddNewMaterial);
+            this.Controls.Add(this.BtnDeleteProduct);
+            this.Controls.Add(this.BtnAddProduct);
             this.Controls.Add(this.ComboBoxProducts);
-            this.Controls.Add(this.DataGridProducts);
+            this.Controls.Add(this.DataGridMaterials);
             this.Controls.Add(this.ComboProducts);
             this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.BtnSave);
             this.Controls.Add(this.LblName);
@@ -609,7 +655,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.joelProductsBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.joelEngineeringDBDataSet2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DataGridProducts)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DataGridMaterials)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -659,15 +705,19 @@
         private System.Windows.Forms.Label LblName;
         private System.Windows.Forms.Button BtnSave;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.ComboBox ComboProducts;
         private JoelEngineeringDBDataSet2 joelEngineeringDBDataSet2;
         private System.Windows.Forms.BindingSource joelProductsBindingSource;
         private JoelEngineeringDBDataSet2TableAdapters.JoelProductsTableAdapter joelProductsTableAdapter;
-        private System.Windows.Forms.DataGridView DataGridProducts;
+        private System.Windows.Forms.DataGridView DataGridMaterials;
         private System.Windows.Forms.ComboBox ComboBoxProducts;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button BtnAddProduct;
+        private System.Windows.Forms.Button BtnDeleteProduct;
+        private System.Windows.Forms.Button BtnAddNewMaterial;
+        private System.Windows.Forms.Button BtnDeleteMaterial;
+        private System.Windows.Forms.TextBox TxtProductName;
+        private System.Windows.Forms.Label label18;
     }
 }
 

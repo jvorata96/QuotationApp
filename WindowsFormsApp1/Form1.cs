@@ -22,6 +22,7 @@ namespace WindowsFormsApp1
             InitializeComponent();
 
             InitializeRawMaterials();
+            InitializeProducts();
 
         }
 
@@ -108,6 +109,7 @@ namespace WindowsFormsApp1
             comboBox1.DisplayMember = "Name";
             comboBox1.ValueMember = null;
             comboBox1.DataSource = cylinderList;
+            
 
             textBox1.Text = cylinderList.Count.ToString();
 
@@ -576,98 +578,44 @@ namespace WindowsFormsApp1
         public SQLQuery sQLQuery;
         List<Material> materialsx;
 
-        private void button1_Click(object sender, EventArgs e)
+        private void InitializeProducts()
         {
-            //SQLQuery sQLQuery = new SQLQuery();
             sQLQuery = new SQLQuery();
-            sQLQuery.Connect();
+            //sQLQuery.Connect();
+            //sQLQuery.GetProducts();
+            sQLQuery.GetProducts();
 
 
-            //List<Material> materials = new List<Material>(sQLQuery.Products);
-            materialsx = new List<Material>(sQLQuery.Products);
-            DataGridProducts.DataSource = materialsx;
-
-            DataGridProducts.AutoResizeColumns();
-
-            DataGridProducts.Columns["SubTotal"].DefaultCellStyle.Format = "C2";
-            DataGridProducts.Columns["Price_Per_Piece"].DefaultCellStyle.Format = "C2";
-            DataGridProducts.Columns["Subtotal"].HeaderText = "Sub Total";
-            DataGridProducts.Columns["Price_Per_Piece"].HeaderText = "Price per Piece";
 
 
-            DataGridProducts.Columns["Material_Cost"].Visible = false;
-            DataGridProducts.Columns["Setup_Hr"].Visible = false;
-            DataGridProducts.Columns["Setup_Cost"].Visible = false;
-            DataGridProducts.Columns["Operation_Cost"].Visible = false;
-            DataGridProducts.Columns["Operation_Hr"].Visible = false;
-            DataGridProducts.Columns["Markup"].Visible = false;
+            List<Material> materials = new List<Material>(sQLQuery.Products);
+            materialsx = new List<Material>(sQLQuery.ProductList);
+            //DataGridMaterials.DataSource = materialsx;
 
-            DataGridProducts.ClearSelection();
+            //DataGridMaterials.AutoResizeColumns();
+
+            //DataGridMaterials.Columns["SubTotal"].DefaultCellStyle.Format = "C2";
+            //DataGridMaterials.Columns["Price_Per_Piece"].DefaultCellStyle.Format = "C2";
+            //DataGridMaterials.Columns["Subtotal"].HeaderText = "Sub Total";
+            //DataGridMaterials.Columns["Price_Per_Piece"].HeaderText = "Price per Piece";
+
+
+            //DataGridMaterials.Columns["Material_Cost"].Visible = false;
+            //DataGridMaterials.Columns["Setup_Hr"].Visible = false;
+            //DataGridMaterials.Columns["Setup_Cost"].Visible = false;
+            //DataGridMaterials.Columns["Operation_Cost"].Visible = false;
+            //DataGridMaterials.Columns["Operation_Hr"].Visible = false;
+            //DataGridMaterials.Columns["Markup"].Visible = false;
+
+            //DataGridMaterials.ClearSelection();
 
             ComboBoxProducts.DisplayMember = "Name";
-            ComboBoxProducts.ValueMember = null;
+            ComboBoxProducts.ValueMember = "Id";
             ComboBoxProducts.DataSource = materialsx;
-
-
-            //try
-            //{
-            //    SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
-            //    {
-            //        DataSource = "joelengineering.database.windows.net",
-            //        UserID = "tony",
-            //        Password = "Jadenonoy_12",
-            //        InitialCatalog = "JoelEngineeringDB"
-            //    };
-
-            //    using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
-            //    {
-            //        Console.WriteLine("\nQuery data example:");
-            //        //Console.WriteLine("=========================================\n");
-
-            //        connection.Open();
-            //        StringBuilder sb = new StringBuilder();
-            //        sb.Append("SELECT * FROM JoelProducts");
-            //        //sb.Append("INSERT INTO JoelProducts VALUES ('trylang227', 223, 1, 50, 3, 75, 0.5);");
-
-            //        String sql = sb.ToString();
-
-            //        SqlCommand command = new SqlCommand(sql, connection);
-            //        command.ExecuteNonQuery();
-
-            //        textBox2.Text = "yoyoyo";
-
-
-            //        ComboProducts.DataSource = null;
-            //        ComboProducts.DisplayMember = "PRODUCT NAME/WORKS";
-            //        ComboProducts.DataSource = joelProductsBindingSource;
-
-
-            //        Console.WriteLine("hello");
-
-
-            //        ComboProducts.Refresh();
-            //        //ComboProducts.Update();
-            //        //using (SqlCommand command = new SqlCommand(sql, connection))
-            //        //{
-            //        //    using (SqlDataReader reader = command.ExecuteReader())
-            //        //    {
-            //        //        while (reader.Read())
-            //        //        {
-            //        //            //Console.WriteLine("{0} {1}", reader.GetString(0), reader.GetString(1));
-            //        //            textBox2.Text = reader.GetInt32(0).ToString() + reader.GetString(1).ToString();
-            //        //            break;
-            //        //        }
-            //        //    }
-            //        //}
-            //    }
-            //}
-            //catch (SqlException ex)
-            //{
-            //    MessageBox.Show(ex.Message + ex.Source);
-            //}
-
         }
 
+        
+        
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
 
@@ -680,53 +628,138 @@ namespace WindowsFormsApp1
 
         private void ComboProducts_SelectedIndexChanged_1(object sender, EventArgs e)
         {
-
+            DisplayProducts();
         }
 
         private void DisplayProducts()
         {
+            sQLQuery.GetProducts();
 
+            materialsx = new List<Material>(sQLQuery.ProductList);
+
+            ComboBoxProducts.DisplayMember = "Name";
+            ComboBoxProducts.ValueMember = "Id";
+            ComboBoxProducts.DataSource = materialsx;
+            //textBox3.Text = currentProduct.Id.ToString();
+            //textBox3.Text = ((Material)ComboBoxProducts.SelectedItem).Id.ToString();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void DisplayMaterials()
+        {
+            
+            sQLQuery.GetMaterials(currentProduct.Id);
+
+            materialsx = new List<Material>(sQLQuery.MaterialList);
+
+
+            DataGridMaterials.DataSource = null;
+            DataGridMaterials.DataSource = materialsx;
+
+            DataGridMaterials.AutoResizeColumns();
+
+            DataGridMaterials.Columns["SubTotal"].DefaultCellStyle.Format = "C2";
+            DataGridMaterials.Columns["Price_Per_Piece"].DefaultCellStyle.Format = "C2";
+            DataGridMaterials.Columns["Subtotal"].HeaderText = "Sub Total";
+            DataGridMaterials.Columns["Price_Per_Piece"].HeaderText = "Price per Piece";
+
+
+            //DataGridMaterials.Columns["Material_Cost"].Visible = false;
+            //DataGridMaterials.Columns["Setup_Hr"].Visible = false;
+            //DataGridMaterials.Columns["Setup_Cost"].Visible = false;
+            //DataGridMaterials.Columns["Operation_Cost"].Visible = false;
+            //DataGridMaterials.Columns["Operation_Hr"].Visible = false;
+            //DataGridMaterials.Columns["Markup"].Visible = false;
+
+            DataGridMaterials.ClearSelection();
+
+            //ComboBoxProducts.DisplayMember = "Name";
+            //ComboBoxProducts.ValueMember = null;
+            //ComboBoxProducts.DataSource = materialsx;
+        }
+
+        private void BtnAddProduct_Click(object sender, EventArgs e)
+        {
+            if (TxtProductName.Text.Length > 0)
+            {
+                if(!IsProductAlreadyExist())
+                {
+                    Material material = new Material
+                    {
+                        Name = TxtProductName.Text,
+                    };
+
+                    sQLQuery.AddProduct(material);
+                    DisplayProducts();
+                }
+                else
+                {
+                    MessageBox.Show("Product Name already exists");
+                }
+                
+            }
+            else
+            {
+                MessageBox.Show("Please enter Product Name");
+            }
+        }
+
+        private bool IsProductAlreadyExist()
+        {
+            sQLQuery.GetProducts();
+
+            materialsx = new List<Material>(sQLQuery.ProductList);
+            var match = materialsx.FirstOrDefault(stringToCheck => stringToCheck.Name.Contains(TxtProductName.Text));
+            return match == null ? false : true;
+        }
+
+        private void BtnAddNewMaterial_Click(object sender, EventArgs e)
         {
             Material material = new Material
             {
-                Name = "sample",
-                Material_Cost = 2,
-                Setup_Hr = 3,
-                Setup_Cost = 4,
-                Operation_Hr = 5,
-                Operation_Cost = 6,
-                Markup = 7,
-                Qty = 1
+                Name = TxtName.Text,
+                Qty = UInt32.Parse(TxtQty.Text),
+                Material_Cost = float.Parse(TxtCost.Text),
+                Markup = float.Parse(TxtMarkup.Text),
+                Setup_Cost = UInt32.Parse(TxtSetupCost.Text),
+                Setup_Hr = float.Parse(TxtSetupHr.Text),
+                Operation_Cost = UInt32.Parse(TxtOptCost.Text),
+                Operation_Hr = float.Parse(TxtOptHr.Text),
+                Grp_Id = ((Material)ComboBoxProducts.SelectedItem).Id
             };
 
-            sQLQuery.AddProduct(material);
+            sQLQuery.AddMaterial(material);
+            DisplayMaterials();
+        }
 
-            materialsx = new List<Material>(sQLQuery.Products);
-            DataGridProducts.DataSource = materialsx;
+        private Material currentProduct;
 
-            DataGridProducts.AutoResizeColumns();
+        private void ComboBoxProducts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ComboBoxProducts.SelectedIndex != -1)
+            {
+                currentProduct = (Material)ComboBoxProducts.SelectedItem;
+                Console.WriteLine("hoy eto selected: " + currentProduct.Id.ToString());
+                DisplayMaterials();
+            }
+        }
 
-            DataGridProducts.Columns["SubTotal"].DefaultCellStyle.Format = "C2";
-            DataGridProducts.Columns["Price_Per_Piece"].DefaultCellStyle.Format = "C2";
-            DataGridProducts.Columns["Subtotal"].HeaderText = "Sub Total";
-            DataGridProducts.Columns["Price_Per_Piece"].HeaderText = "Price per Piece";
+        private void BtnDeleteProduct_Click(object sender, EventArgs e)
+        {
+            sQLQuery.DeleteProduct(currentProduct.Id);
 
+            DisplayProducts();
+        }
 
-            DataGridProducts.Columns["Material_Cost"].Visible = false;
-            DataGridProducts.Columns["Setup_Hr"].Visible = false;
-            DataGridProducts.Columns["Setup_Cost"].Visible = false;
-            DataGridProducts.Columns["Operation_Cost"].Visible = false;
-            DataGridProducts.Columns["Operation_Hr"].Visible = false;
-            DataGridProducts.Columns["Markup"].Visible = false;
+        private void BtnDeleteMaterial_Click(object sender, EventArgs e)
+        {
+            sQLQuery.DeleteMaterial(currentProduct.Id);
 
-            DataGridProducts.ClearSelection();
+            DisplayMaterials();
+        }
 
-            ComboBoxProducts.DisplayMember = "Name";
-            ComboBoxProducts.ValueMember = null;
-            ComboBoxProducts.DataSource = materialsx;
+        private void TxtProductName_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
